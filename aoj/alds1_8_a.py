@@ -42,24 +42,10 @@ def preorder(r):
   preorder(r.left)
   preorder(r.right)
 
-def search(r,key):
-  if r == None: return
-  if r.key == key:
-    return True
-  if r.key < key:
-    return search(r.right,key)
-  else:
-    return search(r.left,key)
-
 for i in range(n):
   s = input()
   if s[0]=="i":
     insert(Node(int(s.split()[1])))
-  elif s[0]=="f":
-    if search(r,int(s.split()[1])):
-      print("yes")
-    else:
-      print("no")
   else:
     ret = []
     inorder(r)
