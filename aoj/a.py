@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
 import sys
 sys.setrecursionlimit(15000)
-n,m = map(int,sys.stdin.readline().split())
-g = list(range(n))
-def find(x):
-  while g[x] != x:
-    x = g[x]
-    g[x] = g[g[x]]
-  return x
-def union(s,t):
-  sp = find(s)
-  tp = find(t)
-  if sp == tp:
-    pass
-  elif sp < tp:
-    g[sp] = tp
-  else:
-    g[tp] = sp
-for i in range(m):
-  s,t = map(int,sys.stdin.readline().split())
-  union(s,t)
+n = int(sys.stdin.readline())
+G = [list(map(int,l.split())) for l in sys.stdin.readlines()]
 
-q = int(sys.stdin.readline())
-for i in range(q):
-  s,t = map(int,sys.stdin.readline().split())
-  if find(s) == find(t):
-    print("yes")
-  else:
-    print("no")
+s = {0}
+su = 0
+while len(s) < n:
+  mi = 0
+  mj = 0
+  for i in s:
+    for j in range(n):
+      if G[i][j] == -1 or j in s:
+        continue
+      if (mi == 0 and mj == 0) or G[i][j] < G[mi][mj]:
+        mi = i
+        mj = j
+  s.add(mj)
+  su += G[mi][mj]
+print(su)
