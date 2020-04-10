@@ -17,7 +17,7 @@ for i in range(n+1):
   elif st[-1][1] < a[i]:
     st.append([i,a[i]])
   elif st[-1][1] == a[i]:
-    st.append([i,a[i]])
+    continue
   elif st[-1][1] > a[i]:
     while st and st[-1][1] >= a[i]:
       j,h = st.pop()
