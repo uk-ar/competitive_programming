@@ -64,7 +64,7 @@ def solve():
             while rest > com*buf:
                 cur = nex
                 rest = rest - com
-                ret.append(cur)
+                ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                 nex,_ = down(cur,rest)
                 com = comb(nex[0],nex[1])
                 buf = 3.3
@@ -75,7 +75,8 @@ def solve():
                 ret.append(cur)
             while rest > 0 and cur[1] > 3:#up
                 cur,rest = up(cur,rest)
-                ret.append(cur)
+                #ret.append(cur)
+                ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                 #print(cur,comb(cur[0],cur[1]),nex,com,rest)
             if rest > 0:
                 steps = 500-len(ret)
@@ -83,14 +84,14 @@ def solve():
                 if rest < steps*cur[0]//10000000:
                     while rest > 0:
                         cur,rest = left_or_down(cur,rest)
-                        ret.append(cur)
+                        ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                 elif (cur[0])*(cur[0]-1)//2 > rest:
                     while rest > 0 and cur[1] > 1:
                         cur,rest = up(cur,rest)
-                        ret.append(cur)
+                        ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                     while rest > 0:
                         cur,rest = right_or_up(cur,rest)
-                        ret.append(cur)
+                        ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                 else:
                     # while rest > 0 and cur[1] > 1:
                     #     cur,rest = up(cur,rest)
@@ -98,12 +99,12 @@ def solve():
                     if rest > 0:
                         cur = [cur[0]+1,cur[1]]#shift down
                         rest = rest - comb(cur[0],cur[1])
-                        ret.append(cur)
+                        ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
                     buf = 2
             #print(cur,comb(cur[0],cur[1]),rest)
     #print(*[" ".join(map(str,p)) for p in ret],sep="\n")
     print(ret[-1])
-    print(len({" ".join(map(str,p)) for p in ret}),len(ret))
+    print(len({" ".join(map(str,p[0])) for p in ret}),len(ret))
 
 T = int(sys.stdin.readline())
 for t in range(T):
