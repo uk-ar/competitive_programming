@@ -38,16 +38,16 @@ def right_or_up(cur,rest):
         nex = [cur[0]-1,cur[1]]
     return nex,rest-comb(nex[0],nex[1])
 
-# def down(cur,rest):
-#     down = [cur[0]+1,cur[1]+1]
-#     com = comb(down[0],down[1])
-#     if cur[1] > 1:
-#         nex = [cur[0],cur[1]-1]
-#     elif com + 1 <= rest:
-#         nex = down
-#     else:
-#         nex = [cur[0]+1,cur[1]]
-#     return nex,rest-comb(nex[0],nex[1])
+def left_or_down(cur,rest):
+    down = [cur[0]+1,cur[1]+1]
+    com = comb(down[0],down[1])
+    if cur[1] > 1:
+        nex = [cur[0],cur[1]-1]
+    elif com + 1 <= rest:
+        nex = down
+    else:
+        nex = [cur[0]+1,cur[1]]
+    return nex,rest-comb(nex[0],nex[1])
 
 def solve():
     n = int(sys.stdin.readline())
@@ -68,7 +68,7 @@ def solve():
                 nex,_ = down(cur,rest)
                 com = comb(nex[0],nex[1])
                 buf = 3.3
-                print(cur,comb(cur[0],cur[1]),nex,com,rest)
+                #print(cur,comb(cur[0],cur[1]),nex,com,rest)
             if cur[1] > 3:
                 cur = [cur[0],cur[1]-1]#shift left
                 rest = rest - comb(cur[0],cur[1])
@@ -76,11 +76,15 @@ def solve():
             while rest > 0 and cur[1] > 3:#up
                 cur,rest = up(cur,rest)
                 ret.append(cur)
-                print(cur,comb(cur[0],cur[1]),nex,com,rest)
+                #print(cur,comb(cur[0],cur[1]),nex,com,rest)
             if rest > 0:
-                #print("n",n)
+                steps = 500-len(ret)
                 #if n > 1000 and (cur[0]-1)*(cur[0]-1)//2 > rest:
-                if (cur[0]-1)*(cur[0]-1)//2 > rest:
+                if rest < steps*cur[0]//10000000:
+                    while rest > 0:
+                        cur,rest = left_or_down(cur,rest)
+                        ret.append(cur)
+                elif (cur[0])*(cur[0]-1)//2 > rest:
                     while rest > 0 and cur[1] > 1:
                         cur,rest = up(cur,rest)
                         ret.append(cur)
@@ -96,8 +100,9 @@ def solve():
                         rest = rest - comb(cur[0],cur[1])
                         ret.append(cur)
                     buf = 2
-            print(cur,comb(cur[0],cur[1]),rest)
-    print(*[" ".join(map(str,p)) for p in ret],sep="\n")
+            #print(cur,comb(cur[0],cur[1]),rest)
+    #print(*[" ".join(map(str,p)) for p in ret],sep="\n")
+    print(ret[-1])
     print(len({" ".join(map(str,p)) for p in ret}),len(ret))
 
 T = int(sys.stdin.readline())
