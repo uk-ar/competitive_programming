@@ -10,41 +10,50 @@
 # permutations('ABCD', 2)  # AB AC AD BA BC BD CA CB CD DA DB DC
 # combinations('ABCD', 2)  # AB AC AD BC BD CD
 # combinations_with_replacement('ABCD', 2) #AA AB AC AD BB BC BD CC CD DD
+# math.ceil(math.log2(d)) 4->2 5->3
+# math.floor(math.log2(d)) 4->2 5->2
 import math,collections
 import sys
 sys.setrecursionlimit(15000)
 
-def find(dp,X,Y):
-    if X in dp and Y in dp[X]:
-        return dp[X][Y]
-    while X != 0 and Y != 0:
-        d = abs(X)+abs(Y)
-        if abs(X) < abs(Y):
-
-    # p = 2
-    # while p<=4:
-    #     ndp = collections.defaultdict(dict)
-    #     for x,row in dp.items():
-    #         for y in row:
-    #             for k,d in dire.items():
-    #                 nx = x+d[0]*p
-    #                 ny = y+d[1]*p
-    #                 ndp[nx][ny] = dp[x][y]+k
-    #                 # if nx==X and ny==Y:
-    #                 #     return ndp[nx][ny]
-    #     dp = ndp
-    #     p = p*2
-    #     print(dp)
+def find(X,Y,k=-1):
+    # if X in dp and Y in dp[X]:
+    #     return [dp[X][Y]]
+    d = abs(X)+abs(Y)
+    if k == -1:
+        k = math.floor(math.log2(d))
+    if k == 0:
+        if X==1:
+            return ["E"]
+        elif X==-1:
+            return ["W"]
+        elif Y==1:
+            return ["N"]
+        elif Y==-1:
+            return ["S"]
+    #print(X,Y,k)
+    if abs(X) < abs(Y):
+        if Y > 0:
+            return find(X,Y-pow(2,k),k-1)+["N"]
+        else:#Y > 0:
+            return find(X,Y+pow(2,k),k-1)+["S"]
+    else:
+        if X > 0:
+            return find(X-pow(2,k),Y,k-1)+["E"]
+        else:
+            return find(X+pow(2,k),Y,k-1)+["W"]
+    #return []
 T = int(sys.stdin.readline())
 for t in range(T):
     X,Y = map(int,sys.stdin.readline().split())
+    #print("ini",X,Y)
     if (X + Y)%2==0:
         ret = "IMPOSSIBLE"
     else:
-        dp = collections.defaultdict(dict)
-        dire = {"E":[1,0],"W":[-1,0],"S":[0,-1],"N":[0,1]}
-        for k,d in dire.items():
-            dp[d[0]][d[1]]=k
-        ret = find(dp,X,Y)
+        # dp = collections.defaultdict(dict)
+        # dire = {"E":[1,0],"W":[-1,0],"S":[0,-1],"N":[0,1]}
+        # for k,d in dire.items():
+        #     dp[d[0]][d[1]]=k
+        ret = "".join(find(X,Y))
     #print(X,Y)
     print("Case #{}: {}".format(t+1,ret))
