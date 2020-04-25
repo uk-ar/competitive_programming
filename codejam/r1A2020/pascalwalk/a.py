@@ -155,40 +155,6 @@ def solve():
         rest = n-7
         buf = 3.3
         down(cur,rest,ret)
-        # while rest > 0:
-        #     if cur[1] > 3:
-        #         cur = [cur[0],cur[1]-1]#shift left
-        #         rest = rest - comb(cur[0],cur[1])
-        #         ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #     while rest > 0 and cur[1] > 3:#up
-        #         cur,rest = up(cur,rest)
-        #         #ret.append(cur)
-        #         ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #         #print(cur,comb(cur[0],cur[1]),nex,com,rest)
-        #     if rest > 0:
-        #         steps = 500-len(ret)
-        #         #if n > 1000 and (cur[0]-1)*(cur[0]-1)//2 > rest:
-        #         if (cur[0])*(cur[0]-1)//2 > rest:
-        #             while rest > 0 and cur[1] > 1:
-        #                 cur,rest = up(cur,rest)
-        #                 ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #             while rest > 0:
-        #                 cur,rest = right_or_up(cur,rest)
-        #                 ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #         elif rest < steps*cur[0]//10:
-        #             while rest > 0:
-        #                 cur,rest = left_or_down(cur,rest)
-        #                 ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #         else:
-        #             # while rest > 0 and cur[1] > 1:
-        #             #     cur,rest = up(cur,rest)
-        #             #     ret.append(cur)
-        #             if rest > 0:
-        #                 cur = [cur[0]+1,cur[1]]#shift down
-        #                 rest = rest - comb(cur[0],cur[1])
-        #                 ret.append([cur,comb(cur[0],cur[1]),nex,com,rest])
-        #             buf = 2
-            #print(cur,comb(cur[0],cur[1]),rest)
     print(*[" ".join(map(str,p[0])) for p in ret],sep="\n")
     #print(*[" ".join(map(str,p)) for p in ret],sep="\n")
     #assert(ret[-1][-1]==0)
