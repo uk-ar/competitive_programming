@@ -7,17 +7,13 @@
 # S = sys.stdin.readline().rstrip()
 # N = int(sys.stdin.readline())
 import sys,bisect,math
+from functools import reduce
 sys.setrecursionlimit(15000)
 
 N = int(sys.stdin.readline())
-ret = []
-n = N
-for i in range(2,math.floor(pow(N,0.5))+1):
-  #print(n,i,n%i)
-  while n%i==0:
-    ret.append(i)
-    n = n//i
-if n != 1:
-    ret.append(n)
-print("{}: {}".format(N," ".join(map(str,ret))))
-#print("{}: {}".format(N,str(ret)[1:-1]))
+A = list(map(int,sys.stdin.readline().split()))
+
+def lcm(x,y):
+  return x*y // math.gcd(x,y)
+
+print(reduce(lcm,A))
