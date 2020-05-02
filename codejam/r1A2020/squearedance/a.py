@@ -9,6 +9,9 @@ sys.setrecursionlimit(15000)
 def solve():
     row,col = map(int,sys.stdin.readline().split())
     s = [list(map(int,sys.stdin.readline().split())) for _ in range(row)]
+    for r in s:
+        r.append(0)
+    s.append([0]*(col+1))
     def neigbors(r,c):
         ret = []
         tr = r+1
@@ -32,32 +35,27 @@ def solve():
         if 0 <= tc:
             ret.append(s[r][tc])
         return ret
-    ret = 0
-    update = []
-    dancers = []
-    for r in range(row):
-        for c in range(col):
-            ret += s[r][c]
+    def next_stage(dancers):#return
+        next_dancers = set()
+        droped_dancers = set()
+        for r,c in dancers: #array of rest dancers
             nei = neigbors(r,c)
             if len(nei) > 0 and (sum(nei)/len(nei) > s[r][c]):
-                update.append([r,c])
+                droped_dancers.add((r,c))
             else:
-                dancers.append([r,c])
+                next_dancers.add((r,c))
+        return next_dancers,droped_dancers
+    ret = 0
+    dancers = set([(r,c) for r in range(row) for c in range(col)])
+    ret += sum(s[r][c] for r,c in dancers)
+    dancers,update = next_stage(dancers)
     #print(dancers,s,ret)
-    while update:
+    while update:#array of dancers to be update
+        print(update)
         for r,c in update:
             s[r][c]=0
-        update = []
-        nex = []
-        for r,c in dancers:
-            ret += s[r][c]
-            nei = neigbors(r,c)
-            if len(nei) > 0 and (sum(nei)/len(nei) > s[r][c]):
-                update.append([r,c])
-            else:
-                nex.append([r,c])
-        dancers = nex
-        #print(dancers,s,ret)
+        ret += sum(s[r][c] for r,c in dancers)
+        dancers,update = next_stage(dancers)
     return ret
 
 T = int(sys.stdin.readline())
