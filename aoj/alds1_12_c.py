@@ -16,8 +16,6 @@ ALL = set(range(N))
 mst = set()
 distances = [INF]*N # 始点0からの距離
 distances[0] = 0
-parents = [INF]*N
-parents[0] = 0
 
 import heapq
 
@@ -30,7 +28,6 @@ def add(u):
     w = G[u][j+1]
     if not v in mst and w + distances[u] < distances[v]: # uを経由した方が安い
       distances[v] = distances[u]+w
-      parents[v] = u
       heapq.heappush(dv, (distances[v],v))
   #print(distances)
   d,v = heapq.heappop(dv)
@@ -40,7 +37,6 @@ def add(u):
 
 n = add(0)
 distances[0] = 0
-parents[0]=0
 while len(mst) < len(G):
   n = add(n)
 
