@@ -7,6 +7,11 @@
 import sys,bisect,math
 sys.setrecursionlimit(15000)
 
-s = sys.stdin.readline().rstrip()
-if s == "ABC":
-    print("ARC")
+X = int(sys.stdin.readline())
+a = 100.0
+n = 0
+while X > a:
+    a *= 1.01
+    a = math.floor(a)
+    n += 1
+print(n)
