@@ -7,37 +7,55 @@
 # n = int(sys.stdin.readline())
 # INF = float("inf")
 import sys,collections
-N,E = tuple(map(int,sys.stdin.readline().split())) # single line with multi param
+V,E = tuple(map(int,sys.stdin.readline().split())) # single line with multi param
 #sdw = [[src1 dist1 d1][src1 dist1 d1]...]# vect source1 -> distance1 distances
 INF = float("inf")
 
-distances = [[INF]*N for _ in range(N)]
-for i in range(N):
-  distances[i][i] = 0
+st = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(E)) # multi line with multi param
 
-for i in range(E):
-  s,d,w = (map(int,sys.stdin.readline().rstrip().split()))
-  distances[s][d] = w
+G = [[] for _ in range(V)]
 
-#print(distances)
-def warshallFloyd():
-  for k in range(N):
-    for i in range(N):
-      for j in range(N):
-        distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j])
+for s,t in st:
+    G[s].append(t)
 
-warshallFloyd()
+visited = set()
+indeg = [0]*V
+ret = []
+def bfs(s):
+    q = collections.deque([s])
+    visited.add(s)
+    while q:
+        u = q.popleft()
+        ret.append(u)
+        for v in G[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0 and not v in visited:
+                visited.add(v)
+                q.append(v)
 
-for i in range(N):
-  if distances[i][i] < 0:
-    print("NEGATIVE CYCLE")
-    exit()
+def topologicalSort_bfs():
+    for a in G:
+        for t in a:
+            indeg[t] += 1
+    #print(G,indeg)
+    for i in range(V):
+        if indeg[i] == 0 and not i in visited:
+            bfs(i)
 
-for i in range(N):
-  s = []
-  for j in range(N):
-    if distances[i][j] == INF:
-      s.append("INF")
-    else:
-      s.append(str(distances[i][j]))
-  print(" ".join(s))
+def dfs(s):
+    #print("s:",s)
+    if s in visited:
+        return
+    for e in G[s]:
+        dfs(e)
+    ret.append(s)
+    visited.add(s)
+
+def topologicalSort():
+    for i in range(V):
+        dfs(i)
+
+#topologicalSort_bfs()
+topologicalSort()
+ret.reverse()
+print(*ret,sep='\n')
