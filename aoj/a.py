@@ -51,11 +51,12 @@ def dfs(s):
     ret.append(s)
     visited.add(s)
 
-def topologicalSort():
+def topologicalSort_dfs():
     for i in range(V):
         dfs(i)
+    ret.reverse()
 
 #topologicalSort_bfs()
-topologicalSort()
-ret.reverse()
+topologicalSort_dfs()
+
 print(*ret,sep='\n')
