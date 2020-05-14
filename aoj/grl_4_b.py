@@ -6,9 +6,7 @@
 # s = sys.stdin.readline().rstrip()
 # n = int(sys.stdin.readline())
 # INF = float("inf")
-
 import sys,collections
-sys.setrecursionlimit(100000)
 V,E = tuple(map(int,sys.stdin.readline().split())) # single line with multi param
 #sdw = [[src1 dist1 d1][src1 dist1 d1]...]# vect source1 -> distance1 distances
 INF = float("inf")
@@ -19,36 +17,46 @@ G = [[] for _ in range(V)]
 
 for s,t in st:
     G[s].append(t)
-    G[t].append(s) #not directed
 
 visited = set()
-prenum = [0]*V
-parent = [0]*V
-lowest = [0]*V
-timer = 0
+indeg = [0]*V
+ret = []
+def bfs(s):
+    q = collections.deque([s])
+    visited.add(s)
+    while q:
+        u = q.popleft()
+        ret.append(u)
+        for v in G[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0 and not v in visited:
+                visited.add(v)
+                q.append(v)
 
-def dfs(current,prev):
-    global timer
-    parent[current]=prev
-    prenum[current]=lowest[current]=timer
-    timer += 1
-    visited.add(current)
-    for nex in G[current]:
-        if not nex in visited:
-            dfs(nex,current)
-            lowest[current]=min(lowest[current],lowest[nex])
-        elif nex != prev:
-            lowest[current]=min(lowest[current],prenum[nex])
-dfs(0,-1)
+def topologicalSort_bfs():
+    for a in G:
+        for t in a:
+            indeg[t] += 1
+    #print(G,indeg)
+    for i in range(V):
+        if indeg[i] == 0 and not i in visited:
+            bfs(i)
 
-ret = set()
-if sum(1 for p in parent if p==0) > 1:
-    ret.add(0)
+def dfs(s):
+    #print("s:",s)
+    if s in visited:
+        return
+    for e in G[s]:
+        dfs(e)
+    ret.append(s)
+    visited.add(s)
 
-for i in range(1,V):
-    p = parent[i]
-    if p != 0 and prenum[p] <= lowest[i]:
-        ret.add(p)
-ret = sorted(list(ret))
-if ret:
-    print(*ret,sep='\n')
+def topologicalSort_dfs():
+    for i in range(V):
+        dfs(i)
+    ret.reverse()
+
+#topologicalSort_bfs()
+topologicalSort_dfs()
+
+print(*ret,sep='\n')
