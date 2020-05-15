@@ -14,7 +14,7 @@ V,E = tuple(map(int,sys.stdin.readline().split())) # single line with multi para
 INF = float("inf")
 
 st = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(E)) # multi line with multi param
-
+#st = [[0,1],[0,2],[1,2],[2,3]]
 G = [[] for _ in range(V)]
 
 for s,t in st:
