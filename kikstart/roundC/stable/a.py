@@ -21,15 +21,19 @@ def dfs_dag(s):
     ret.append(s)
 
 def dfs_cycle(s):
-    if s in c_visited:
-        return False
-    c_visited.add(s)
+    act.add(s)
+    visited.add(s)
     if not s in P:
-        return True
+        act.remove(s)
+        return
     for e in P[s]:
-        if not dfs_cycle(e):
-            return False
-    return True
+        if e in act:
+            global bad
+            bad = True
+            return
+        elif not e in visited:
+            dfs_cycle(e)
+    act.remove(s)
 
 def dfs(s):
     # if s in visited:
@@ -65,23 +69,16 @@ for t in range(T):
                 if GRID[r-1][c] != GRID[r][c]:
                     if not GRID[r-1][c] in P: P[GRID[r-1][c]]=list()
                     P[GRID[r-1][c]].append(GRID[r][c])
-    # for c in range(C):
-    #     P[GRID[0][c]] = set()
-    # for r in range(R-1):
-    #     for c in range(C):
-    #         v[c].add(GRID[r][c])
-    #         if GRID[r][c] != GRID[r+1][c]:
-    #             if GRID[r+1][c] in v[c]:
-    #                 res = False
-    #             if not GRID[r][c] in P:
-    #                 P[GRID[r][c]] = set()
-    #             P[GRID[r][c]].add(GRID[r+1][c])
-    # for i in P.keys():
-    #     c_visited = set()
-    #     res &= dfs_cycle(i)
     visited = set()
     act = set()
     bad = False
+    for i in tv:
+        if not i in visited:
+            dfs_cycle(i)
+    if bad:
+        print("Case #{}: {}".format(t+1,-1))
+        continue
+    visited = set()
     ret = []
     for i in tv:
         if not i in visited:
@@ -90,9 +87,6 @@ for t in range(T):
     #     print("Case #{}: {}".format(t+1,-1))
     #     continue
     # print("Case #{}: {}".format(t+1,"".join(ret)))
-    if bad:
-        print("Case #{}: {}".format(t+1,-1))
-        continue
     print("Case #{}: {}".format(t+1,"".join(ret)))
     # ret = []
     # d_visited = set()
