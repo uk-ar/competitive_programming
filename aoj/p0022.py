@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # n,m = map(int,sys.stdin.readline().split())
 # a = list(map(int,sys.stdin.readline().split()))
-# a = [sys.stdin.readline() for s in range(n)]
+# a = [sys.stdin.readline().split() for _ in range(N)]
 # s = sys.stdin.readline().rstrip()
 # n = int(sys.stdin.readline())
+# INF = float("inf")
 import sys,bisect
 sys.setrecursionlimit(15000)
 
