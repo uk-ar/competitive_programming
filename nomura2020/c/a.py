@@ -11,24 +11,29 @@ import sys,collections
 N = int(sys.stdin.readline())
 LEAVES = tuple(map(int,sys.stdin.readline().split())) # single line with multi param
 ret = 0
-def dfs(l=0,lim=1,t=[]):
+t = 0
+com = []
+for l in LEAVES[::-1]:
+    t = l + t
+    com.append(t)
+com.reverse()
+
+def dfs(l=1,parentB=1,t=[]):
     global ret
-    print(l,lim,t,ret)#4 6 10 11
-    b = lim - LEAVES[l] # num node(exclude leaf)
-    parent = lim//2
-    #print(l,lim)
-    if b < 0:#or (l == N and 0 < b):
+    lo = parentB-LEAVES[l]
+    hi = 2*parentB-LEAVES[l]
+    if parentB > com[l]:
         return False
-    if l == N and (lim//2 <= LEAVES[l] and LEAVES[l] <= lim):
+    if l == N and lo <= 0 and 0 <= hi:
         t.append(LEAVES[l])
         ret = max(ret,sum(t))
-        print(ret,t)
-        return True
+        print(t,ret)
+        return
     elif l == N:
-        return False
-    #print(b)
-    for p in range(b+1):
-        dfs(l+1,p*2,t+[p+LEAVES[l]])
+        return
+    # #print(b)
+    for p in range(lo,hi+1)[::-1]:
+        dfs(l+1,p,t+[p+LEAVES[l]])
 dfs()
 if ret==0:
     print(-1)
