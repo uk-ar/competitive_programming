@@ -12,51 +12,30 @@ sys.setrecursionlimit(1000000)
 
 INF = float("inf")
 
-N = int(sys.stdin.readline())
-c = tuple(tuple(map(int,sys.stdin.readline().rstrip().split()))[1:] for _ in range(N)) # multi line with multi param
-Q = int(sys.stdin.readline())
-uv = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(Q)) # multi line with multi param
-G = [list() for _ in range(N)]
+N,Q = map(int,sys.stdin.readline().split())
+COM = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(Q)) # multi line with multi param
 
-for i,children in enumerate(c):
-    G[i] = children
-LN = 20#math.floor(N**0.5)
-depth = [0]*N
-parents = [[0]*N for _ in range(LN)]
+parents = list(range(N))
+def find(x):
+  while parents[x] != x:
+    x = parents[x]
+    parents[x] = parents[parents[x]]
+  return x
+def union(s,t):
+  sp = find(s)
+  tp = find(t)
+  if sp == tp:
+    pass
+  elif sp < tp:
+    parents[sp] = tp
+  else:
+    parents[tp] = sp
 
-def dfs(v,p,l):
-    parents[0][v] = p
-    depth[v] = l
-    for i in G[v]:
-        if i != p:
-            dfs(i,v,l+1)
-
-dfs(0,-1,0)
-
-for k in range(LN-1):#-1?
-    for v in range(N):
-        if parents[k][v] < 0:
-            parents[k+1][v] = -1
+for com,x,y in COM:
+    if com == 0:
+        union(x,y)
+    else:
+        if find(x) == find(y):
+            print(1)
         else:
-            parents[k+1][v] = parents[k][parents[k][v]]
-
-def query(u,v):
-    if depth[u] > depth[v]:
-        u,v = v,u
-    while depth[v] != depth[u]:
-        v = parents[int(math.log2(depth[v]-depth[u]))][v]
-    # for k in range(LN)[::-1]:
-    #     if ((depth[v]-depth[u])>>k & 1):
-    #         v = parents[k][v]
-    assert(depth[u]==depth[v])
-    if u == v:
-        return u
-    for k in range(LN)[::-1]:
-        if parents[k][v] != parents[k][u]:
-            v = parents[k][v]
-            u = parents[k][u]
-    return parents[0][u]
-
-ans = []
-for u,v in uv:
-    print(query(u,v))
+            print(0)
