@@ -8,7 +8,7 @@
 # INF = float("inf")
 
 import sys,collections,math
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(1000000)
 
 INF = float("inf")
 
@@ -20,10 +20,10 @@ G = [list() for _ in range(N)]
 
 for i,children in enumerate(c):
     G[i] = children
-LN = math.floor(N**0.5)
+LN = 20#math.floor(N**0.5)
 depth = [0]*N
 parents = [[0]*N for _ in range(LN)]
-#print(parents,N,LN)
+
 def dfs(v,p,l):
     parents[0][v] = p
     depth[v] = l
@@ -35,7 +35,6 @@ dfs(0,-1,0)
 
 for k in range(LN-1):#-1?
     for v in range(N):
-        #print(k,v)
         if parents[k][v] < 0:
             parents[k+1][v] = -1
         else:
@@ -44,35 +43,20 @@ for k in range(LN-1):#-1?
 def query(u,v):
     if depth[u] > depth[v]:
         u,v = v,u
-    # print("d",depth[v]-depth[u])
-    # l = int(math.log2(depth[v]-depth[u]))
-    for k in range(l+1)[::-1]:
-        #print(k,depth[u],depth[v],parents[k][v],depth[parents[k][v]])
-        #if depth[u] != depth[v] and depth[u] <= depth[parents[k][v]]:
-        if ((depth[v]-depth[u])>>k & 1):
-            v = parents[k][v]
-    # for _ in range(d):
-    #     v = parents[0][v]
+    while depth[v] != depth[u]:
+        v = parents[int(math.log2(depth[v]-depth[u]))][v]
+    # for k in range(LN)[::-1]:
+    #     if ((depth[v]-depth[u])>>k & 1):
+    #         v = parents[k][v]
     assert(depth[u]==depth[v])
-    #print(u,v)
     if u == v:
         return u
-    # while v != u:
-    #     v = parents[v]
-    #     u = parents[u]
     for k in range(LN)[::-1]:
         if parents[k][v] != parents[k][u]:
             v = parents[k][v]
             u = parents[k][u]
     return parents[0][u]
-#print(c,depth,parents)
+
 ans = []
 for u,v in uv:
-    #print(u,v,depth[u],depth[v])
-    ans.append(query(u,v))
-sys.stdout.write("\n".join(map(str, ans)))
-sys.stdout.write("\n")
-    #            ((1, 2, 3),
- #      (4, 5, 6), (), (7, 8),
- # (), (9, 10), (14, 15), (), (),
- # (), (11, 12, 13), (), (), (), (), ())
+    print(query(u,v))
