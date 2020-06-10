@@ -10,32 +10,35 @@
 import sys,collections,math
 sys.setrecursionlimit(1000000)
 
-INF = float("inf")
+INF = 2**31-1
 
 N,Q = map(int,sys.stdin.readline().split())
 COM = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(Q)) # multi line with multi param
+i = 1
+while i < N:
+    i*=2
+N = i
+MAX_N = 1 << math.ceil(math.log2(N)) # 17
+SEG = [0]*(2*MAX_N-1)
 
-parents = list(range(N))
-def find(x):
-  while parents[x] != x:
-    x = parents[x]
-    parents[x] = parents[parents[x]]
-  return x
-def union(s,t):
-  sp = find(s)
-  tp = find(t)
-  if sp == tp:
-    pass
-  elif sp < tp:
-    parents[sp] = tp
-  else:
-    parents[tp] = sp
+def update(k,a):#0 indexed
+    k += N-1
+    SEG[k] += a
+    while k > 0:
+        k = (k-1)//2
+        SEG[k] = SEG[k*2+1]+SEG[k*2+2]
+
+def find(a,b,i=0,l=0,r=N):#0 indexed
+    if r <= a or  b <= l:
+        return 0
+    if a <= l and r <= b:
+        return SEG[i]
+    vl = find(a,b,2*i+1,l,(r+l)//2)
+    vr = find(a,b,2*i+2,(r+l)//2,r)
+    return vl+vr
 
 for com,x,y in COM:
     if com == 0:
-        union(x,y)
+        update(x-1,y)
     else:
-        if find(x) == find(y):
-            print(1)
-        else:
-            print(0)
+        print(find(x-1,y))
