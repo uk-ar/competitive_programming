@@ -7,38 +7,56 @@
 # N = int(sys.stdin.readline())
 # INF = float("inf")
 
-import sys,collections,math
+# https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_1_B
+import sys
 sys.setrecursionlimit(1000000)
-
-INF = 2**31-1
-
 N,Q = map(int,sys.stdin.readline().split())
-COM = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(Q)) # multi line with multi param
-i = 1
-while i < N:
-    i*=2
-N = i
-MAX_N = 1 << math.ceil(math.log2(N)) # 17
-SEG = [0]*(2*MAX_N-1)
+qs = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(Q)) # multi line with multi param
 
-def update(k,a):#0 indexed
-    k += N-1
-    SEG[k] += a
-    while k > 0:
-        k = (k-1)//2
-        SEG[k] = SEG[k*2+1]+SEG[k*2+2]
+parents = list(range(N))
+diffs = [0]*N
 
-def find(a,b,i=0,l=0,r=N):#0 indexed
-    if r <= a or  b <= l:
-        return 0
-    if a <= l and r <= b:
-        return SEG[i]
-    vl = find(a,b,2*i+1,l,(r+l)//2)
-    vr = find(a,b,2*i+2,(r+l)//2,r)
-    return vl+vr
-
-for com,x,y in COM:
-    if com == 0:
-        update(x-1,y)
+def root(x):
+    if parents[x]==x:
+        return x
     else:
-        print(find(x-1,y))
+        pr = root(parents[x])
+        diffs[x] += diffs[parents[x]]
+        parents[x] = pr
+        return pr
+
+def weight(x):
+    root(x)
+    return diffs[x]
+
+def diff(x,y):
+    return weight(y)-weight(x)
+
+def issame(x,y):
+    return root(x) == root(y)
+
+# make sure weight(y)-weight(x)=w
+def merge(x,y,w):
+    # assume ry > rx
+    rx = root(x)
+    ry = root(y)
+    # incase rx!=x and ry !=y
+    diff = weight(x)+(w-weight(y))
+    if rx == ry:
+        return False
+    if rx < ry:
+        rx,ry,diff = ry,rx,-diff
+    diffs[ry] = diff
+    parents[ry] = rx
+    return True
+
+for q in qs:
+    if q[0]==0:
+        x,y,z = q[1:]
+        merge(x,y,z)
+    else:
+        x,y = q[1:]
+        if root(x)==root(y):
+            print(diff(x,y))
+        else:
+            print("?")
