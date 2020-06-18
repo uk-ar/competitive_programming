@@ -25,19 +25,7 @@ for x,y,c in xyc:
         grid_w[y%K][x%K] += 1
     else:
         grid_b[y%K][x%K] += 1
-# 4 3
-# 0 1 W
-# 1 2 W
-# 5 3 B
-# 5 4 B
 
-# 6 2
-# 1 2 B
-# 2 1 W
-# 2 2 B
-# 1 0 B
-# 0 6 W
-# 4 5 W
 white =  [[0]*(W+1) for _ in range(H+1)]
 black =  [[0]*(W+1) for _ in range(H+1)]
 for r in range(H):
@@ -48,24 +36,15 @@ for r in range(H):
     for c in range(W+1):
         black[r+1][c] += black[r][c]
         white[r+1][c] += white[r][c]
-#print(grid_b,grid_w)
-#print(black,white)
+
 ret = 0
 for r in range(K+1):
     for c in range(K+1):
         b = black[H][W]-black[H][c]-black[r][W]+2*black[r][c]
         w = white[H][c]+white[r][W]-2*white[r][c]
-        #print(r,c,b,w)
         ret = max(ret,b+w)
         b = black[H][c]+black[r][W]-2*black[r][c]
         w = white[H][W]-white[H][c]-white[r][W]+2*white[r][c]
-        #print(r,c,b,w)
         ret = max(ret,b+w)
 
 print(ret)
-
-# 4 3
-# 0 1 W
-# 1 2 W
-# 5 3 B
-# 5 4 B
