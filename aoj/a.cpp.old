@@ -1,0 +1,38 @@
+// for(int i =0;i<N;i++){
+//   cin >> v.at(i);
+// }
+// single line with multi param
+// vector of vector
+//   vector<vector<int>> data(row,vector<int>(col));
+//for(int row=0;row<N;row++){
+//    for(int col=0;col<N;col++){
+//  }}
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+  long long N,W;
+  cin >> N >> W;
+  vector<int> v(N);
+  vector<int> w(N);
+  vector<int> m(N);
+  for(int i =0;i<N;i++){
+    cin >> v[i] >> w[i] >> m[i];
+  }
+  vector<vector<long long>>dp(N+1,vector<long long>(W+1,INT_MIN));
+  dp[0][0]=0;
+  for(int i=0;i<N;i++){
+    vector<int> vm(W+1,0);
+    for(int j=0;j<=W;j++){
+      if(dp[i][j]>=0){
+        dp[i+1][j]=dp[i][j];
+        vm[j]=m[i];
+      }
+      if(j-w[i]>=0 and vm[j-w[i]]>0){
+        dp[i+1][j]=max(dp[i+1][j],dp[i][j-w[i]]+v[i]);
+        vm[j]=vm[j-w[i]]-1;
+      }
+    }
+  }
+  cout << *max_element(dp[N].begin(),dp[N].end()) << endl;
+}

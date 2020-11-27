@@ -1,0 +1,59 @@
+{
+  "contest": {
+    "id": "bitflyer2018-qual",
+    "title": "codeFlyer （bitFlyer Programming Contest）",
+    "url": "https://atcoder.jp/contests/bitflyer2018-qual"
+  },
+  "tasks": [
+    {
+      "id": "bitflyer2018_qual_a",
+      "label": "A",
+      "title": "本選参加者数",
+      "url": "https://atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_a",
+      "directory": {
+        "path": "a",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "bitflyer2018_qual_b",
+      "label": "B",
+      "title": "洋菓子店",
+      "url": "https://atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_b",
+      "directory": {
+        "path": "b",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "bitflyer2018_qual_c",
+      "label": "C",
+      "title": "徒歩圏内",
+      "url": "https://atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_c",
+      "directory": {
+        "path": "c",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "bitflyer2018_qual_d",
+      "label": "D",
+      "title": "ハンコ",
+      "url": "https://atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_d",
+      "directory": {
+        "path": "d",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "bitflyer2018_qual_e",
+      "label": "E",
+      "title": "祝日",
+      "url": "https://atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_e",
+      "directory": {
+        "path": "e",
+        "testdir": "test"
+      }
+    }
+  ]
+}

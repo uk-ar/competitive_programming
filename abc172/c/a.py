@@ -20,19 +20,13 @@ cum_b = [0]*(M+1)
 for i in range(M):
     cum_b[i+1] = cum_b[i]+b[i]
 
-ok = 0
-ng = N+M+1
+j = M
+ret = 0
+for i in range(N+1):
+    if cum_a[i] > K:
+        break
+    while 0 <= j and j <=M and cum_a[i]+cum_b[j]>K:
+        j -= 1
+    ret = max(ret,i+j)
 
-def isOK(mid):
-    for i in range(N+1):
-        if 0 <= mid-i and mid-i <=M and cum_a[i]+cum_b[mid-i]<=K:
-            return True
-    return False
-
-while ng-ok > 1:
-    mid = (ok+ng)//2
-    if isOK(mid):
-        ok = mid
-    else:
-        ng = mid
-print(ok)
+print(ret)

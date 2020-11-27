@@ -1,0 +1,49 @@
+{
+  "contest": {
+    "id": "arc089",
+    "title": "AtCoder Regular Contest 089",
+    "url": "https://atcoder.jp/contests/arc089"
+  },
+  "tasks": [
+    {
+      "id": "arc089_a",
+      "label": "C",
+      "title": "Traveling",
+      "url": "https://atcoder.jp/contests/arc089/tasks/arc089_a",
+      "directory": {
+        "path": "c",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "arc089_b",
+      "label": "D",
+      "title": "Checker",
+      "url": "https://atcoder.jp/contests/arc089/tasks/arc089_b",
+      "directory": {
+        "path": "d",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "arc089_c",
+      "label": "E",
+      "title": "GraphXY",
+      "url": "https://atcoder.jp/contests/arc089/tasks/arc089_c",
+      "directory": {
+        "path": "e",
+        "testdir": "test"
+      }
+    },
+    {
+      "id": "arc089_d",
+      "label": "F",
+      "title": "ColoringBalls",
+      "url": "https://atcoder.jp/contests/arc089/tasks/arc089_d",
+      "directory": {
+        "path": "f",
+        "testdir": "test"
+      }
+    }
+  ]
+}

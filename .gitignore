@@ -1,2 +1,4 @@
 **/tests/*
 **/test/*
+*.out
+*.in

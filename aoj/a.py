@@ -6,42 +6,63 @@
 # s = sys.stdin.readline().rstrip()
 # N = int(sys.stdin.readline())
 # INF = float("inf")
-import sys
+G = [[] for _ in range(V)]
 
-# N,M = map(int,sys.stdin.readline().split())
-# abx = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(M)) # multi line with multi param
+for s,t in st: # t depends on s
+    G[s].append(t)
 
-# imos=[[0]*(N) for _ in range(N)]
+def dfs(s):
+    #print("s:",s)
+    if s in visited:
+        return
+    for e in G[s]:
+        dfs(e)
+    ret.append(s)
+    visited.add(s)
 
-# for a,b,x in abx:
-#     imos[a-1][b-1] += 1
-#     if a+x-1+1 < N and b+x-1+1 < N:
-#         imos[a+x-1+1][b+x-1+1] -= 1
-#         imos[a+x-1+1][b-1+1] -= 1
-# print(imos)
-# for r in range(N):
-#     for c in range(N):
-#         imos[r][c] += imos[r-1][c-1]#+imos[r][c-1]
-# print(imos)
+def topologicalSort_dfs():
+    for i in range(V):
+        dfs(i)
+    ret.reverse()
+#st = [[0,1],[0,2],[1,2],[2,3]]
+G = {i:[] for i in range(V)}
 
-a,b = map(int,sys.stdin.readline().split())
-N = int(sys.stdin.readline())
-sf = tuple(tuple(map(int,sys.stdin.readline().rstrip().split())) for _ in range(N)) # multi line with multi param
-M = 1000
-imos = [0]*(M+1)
-imos[a] += 1
-imos[b] -= 1
+for s,t in st:
+    G[s].append(t)
 
-for s,f in sf:
-    imos[s] += 1
-    imos[f] -= 1
+def dfs_cycle(s):
+    act.add(s)
+    visited.add(s)
+    #print(s,act,visited,G)
+    if not s in G:
+        act.remove(s)
+        return
+    for e in G[s]:
+        #print(s,e,act)
+        if e in act:
+            global bad
+            bad = True
+            return
+        elif not e in visited:
+            dfs_cycle(e)
+    act.remove(s)
 
-for i in range(M):
-    imos[i+1] += imos[i]
+bad = False
+visited = set()
+act = set()
+for s,_ in st:
+    if not s in visited:
+        dfs_cycle(s)
+if bad:
+    print(1)#has cycle
+else:
+    print(0)
+G = [[] for _ in range(V)]
 
-for i in range(a,b+1):
-    print(i,imos[i])
-    if imos[i] > 1:
-        print("1")
-        exit()
-print("0")
+for s,t in st: # t depends on s
+    G[s].append(t)
+
+ret = []
+visited = set()
+visiting = set()
+self.is_cycle = False
