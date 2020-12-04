@@ -16,13 +16,17 @@
 using namespace std;
 
 int main() {
-  int N,M;
-  cin >> N >> M;
+  int N,K,M;
+  cin >> N >> K >> M;
   vector<long long> A(N);
-  vector<long long> B(N);
-  for(int i =0;i<N;i++){
-    cin >> A.at(i) >> B.at(i);
+  int acc = 0;
+  for(int i =0;i<N-1;i++){
+    cin >> A.at(i);
+    acc+=A[i];
   }
-  cout << std::fixed << std::setprecision(9) <<ret << endl;
-  cout << ret << endl;
+  if(M*N-acc>K){
+    cout << -1 << endl;
+  }else{
+    cout << max(0,M*N-acc) << endl;
+  }
 }

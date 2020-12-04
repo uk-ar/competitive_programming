@@ -16,13 +16,19 @@
 using namespace std;
 
 int main() {
-  int N,M;
-  cin >> N >> M;
-  vector<long long> A(N);
-  vector<long long> B(N);
-  for(int i =0;i<N;i++){
-    cin >> A.at(i) >> B.at(i);
+  int a,b;
+  cin >> a >> b;
+  string A;
+  for(int i=0;i<b;i++){
+    A+=a+'0';
   }
-  cout << std::fixed << std::setprecision(9) <<ret << endl;
-  cout << ret << endl;
+  string B;
+  for(int i=0;i<a;i++){
+    B+=b+'0';
+  }
+  if(A<B){
+    cout << A << endl;
+  }else{
+    cout << B << endl;
+  }
 }

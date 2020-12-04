@@ -12,26 +12,42 @@
       "url": "https://atcoder.jp/contests/abc101/tasks/abc101_a",
       "directory": {
         "path": "a",
-        "testdir": "tests"
+        "testdir": "test",
+        "submit": "a.cpp"
       }
     },
     {
       "id": "abc101_b",
       "label": "B",
       "title": "Digit Sums",
-      "url": "https://atcoder.jp/contests/abc101/tasks/abc101_b"
+      "url": "https://atcoder.jp/contests/abc101/tasks/abc101_b",
+      "directory": {
+        "path": "b",
+        "testdir": "test",
+        "submit": "a.cpp"
+      }
     },
     {
       "id": "arc099_a",
       "label": "C",
       "title": "Minimization",
-      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_a"
+      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_a",
+      "directory": {
+        "path": "c",
+        "testdir": "test",
+        "submit": "a.cpp"
+      }
     },
     {
       "id": "arc099_b",
       "label": "D",
       "title": "Snuke Numbers",
-      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_b"
+      "url": "https://atcoder.jp/contests/abc101/tasks/arc099_b",
+      "directory": {
+        "path": "d",
+        "testdir": "test",
+        "submit": "a.cpp"
+      }
     }
   ]
 }

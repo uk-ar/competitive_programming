@@ -16,13 +16,8 @@
 using namespace std;
 
 int main() {
-  int N,M;
-  cin >> N >> M;
-  vector<long long> A(N);
-  vector<long long> B(N);
-  for(int i =0;i<N;i++){
-    cin >> A.at(i) >> B.at(i);
-  }
-  cout << std::fixed << std::setprecision(9) <<ret << endl;
-  cout << ret << endl;
+  string C;
+  cin >> C;
+  C[0]++;
+  cout << C << endl;
 }
